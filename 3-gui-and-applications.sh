@@ -1,50 +1,46 @@
 #! /bin/bash
 #
-# You need to add a variable for the directory with the install files that will be copied
+# This script should be run from the admin account that was created in the last step
 #
-# Finish users setup
-read -p "Run this script as the newly created admin acount with sudo access"
-read -p "The next step will disable root login"
-read -p "Press [Ctrl] + [C] to exit script OR [Enter] to continue ..."
+#### Variables######
+USR=newuser
+cd /home/install
+####################
+#
+# Disable root login
 passwd -l root
 #
-# Install applications and desktop components
-pacman -S xfce4-panel xfce4-whiskermenu-plugin xfce4-taskmanager xfce4-appfinder xfce4-terminal ristretto vlc guvcview pinta firefox libreoffice-still xed thunar 
+# Install Xorg components
+pacman -S xorg-xinit xorg-server xorg-xinput
 #
-### Below was initiall used but there is way too much stuff. Figure out what you were actually using out of this
-### Install GUI and software figure out what xfce4 software you want
-###pacman -S xfce4 xfce4-goodies
-### Remove mousepad since xed is better... maybe look at what you actually use from xfce4-goodies and xfce4 since your using openbox anyways
-###pacman -R mousepad xfce4-notes-plugin
+# Install Applications (Web browser, photo editor, office suite, notepad, videos, image viewer)
+pacman -S pinta firefox libreoffice-still xed vlc ristretto
 #
-#LIGHTDM SETUP
-pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings fcron feh
+# Install Display Manager (LightDM)
+pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 cp lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
-# Add alarm and root to hidden users in lightdm conf
 read -p "Add alarm root and admin to hidden users in lightdm"
 nano /etc/lightdm/users.conf
-# enable lightdm and reboot
 systemctl enable lightdm
 #
-# Background switching
-# Set cron que to one item
-systemctl enable fcron
-fcron -q 1
-# copy cron file /etc/crontab
-EDITOR=nano fcrontab -e
-# copy user cron file for feh updates
-# figure out how to change default editor as this may be a peta later on
+### UNCOMMENT TO SELECT YOUR DESKTOP ENVIRONMENT
 #
-# OPENBOX SETUP
-pacman -S openbox obconf menumaker ttf-dejavu ttf-liberation xorg-xinit xorg-server xorg-xinput 
-# copy openbox config for system (rc.xml for ctrl-alt-T, ctrl-alt-backspace, ctrl-alt-f)
+# 1) XFCE
+# pacman -S xfce4 xfce4-goodies
+# pacman -R mousepad xfce4-notes-plugin
+#
+# 2) MATE 
+# pacman -S mate mate-extra
+#
+# 3) OPENBOX with xfce components (need to add panel plugins to the list)
+pacman -S xfce4-panel xfce4-whiskermenu-plugin xfce4-taskmanager xfce4-appfinder xfce4-terminal thunar openbox obconf menumaker ttf-dejavu ttf-liberation
+# copy openbox configs with keybindings (Ctrl-Alt-Backspace, Ctrl-Alt-T, Ctrl-Alt-F, Ctrl-Alt-D, Search Key, and USR autostart)
 cp etc-xdg-openbox-rc.xml /etc/xdg/openbox/rc.xml
-# copy openbox config for user
-cp -R openbox /home/harve/.config/
-# cpoy file to cron for background switcher
-# Update user account menu
-runuser -l  harve -c 'mmaker -vf OpenBox3'
-# Update current (root) account menu
+cp -R openbox /home/${USR}/.config/
+# update menus
+runuser -l ${USR} -c 'mmaker -vf OpenBox3'
 mmaker -vf OpenBox3
 openbox --reconfigure
-reboot
+#
+# Start display manager
+systemctl start lightdm
