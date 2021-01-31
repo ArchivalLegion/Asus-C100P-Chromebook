@@ -33,7 +33,7 @@ systemctl enable lightdm
 # pacman -S mate mate-extra
 #
 # 3) OPENBOX with xfce components (need to add panel plugins to the list)
-pacman -S xfce4-panel xfce4-whiskermenu-plugin xfce4-taskmanager xfce4-appfinder xfce4-terminal thunar openbox obconf menumaker ttf-dejavu ttf-liberation
+pacman -S xfce4-panel xfce4-whiskermenu-plugin xfce4-taskmanager xfce4-appfinder xfce4-terminal thunar openbox obconf menumaker ttf-dejavu ttf-liberation feh
 # copy openbox configs with keybindings (Ctrl-Alt-Backspace, Ctrl-Alt-T, Ctrl-Alt-F, Ctrl-Alt-D, Search Key, and USR autostart)
 cp etc-xdg-openbox-rc.xml /etc/xdg/openbox/rc.xml
 cp etc-xdg-openbox-rc.xml /home/${USR}/.config/openbox/rc.xml
