@@ -46,5 +46,8 @@ runuser -l ${USR} -c 'mmaker -vf OpenBox3'
 mmaker -vf OpenBox3
 openbox --reconfigure
 #
+# Fix the ownership of files that were copied into the user directory
+chown -R ${USR}:${USR} /home/${USR}
+#
 # Start display manager
 systemctl start lightdm
