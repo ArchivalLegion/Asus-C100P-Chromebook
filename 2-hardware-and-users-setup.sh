@@ -2,11 +2,13 @@
 #
 # Run on second boot to configure hardware settings and users
 #
-# Variables (TimeZone, USeRname, Default script directory)
+##### Variables #########
+# Timezone and Username
 TZ=America/Vancouver
 USR=newuser
-#
+WIFI=wlan0-mrrobot
 cd /home/install
+#########################
 #
 # Finish wifi fix
 read -p "Change the line ExecStart=echo 'disabled'"
@@ -38,7 +40,7 @@ echo "127.0.1.1 ASUSC100P.localdomain ASUSC100P" >> /etc/hosts
 cp etc-udev-rules.d-83-webcam.rules /etc/udev/rules.d/83-webcam.rules
 #
 # Connect to wifi
-netctl start wlan0-mrrobot
+netctl start ${WIFI}
 #
 # Install hardware packages
 pacman -S alsa-utils xf86-video-armsoc-rockchip veyron-libgl xf86-input-synaptics
