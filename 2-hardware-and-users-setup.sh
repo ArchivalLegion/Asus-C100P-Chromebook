@@ -1,8 +1,12 @@
 #! /bin/bash
 #
-# You need to add a variable for the directory with the install files that will be copied
+# Run on second boot to configure hardware settings and users
 #
-# Run on second boot to configure hardware, settings, and users
+# Variables (TimeZone, USeRname, Default script directory)
+TZ=America/Vancouver
+USR=newuser
+#
+cd /home/install
 #
 # Finish wifi fix
 read -p "Change the line ExecStart=echo 'disabled'"
@@ -12,7 +16,7 @@ nano /usr/lib/systemd/system/systemd-tmpfiles-setup.service
 rm -R /tmp/*
 #
 # Set time zone
-ln -sf /usr/share/zoneinfo/America/Vancouver /etc/localtime
+ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
 hwclock --systohc
 #
 read -p "Uncomment location and save (en_CA.UTF-8) --- Press [Enter] to continue ..."
@@ -30,7 +34,7 @@ echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.1.1 ASUSC100P.localdomain ASUSC100P" >> /etc/hosts
 #
-# Webcam copy udev rules (/dev/video2 --> /dev/webcam)
+# Webcam setup (permissions and symlink to video0)
 cp etc-udev-rules.d-83-webcam.rules /etc/udev/rules.d/83-webcam.rules
 #
 # Connect to wifi
@@ -55,7 +59,7 @@ cp 70-synaptics.conf /etc/X11/xorg.conf.d/70-synaptics.conf
 pacman -S sudo
 #
 # add users
-useradd -m -G network,users,video harve
+useradd -m -G network,users,video ${USR}
 useradd -m -G wheel,network,video,users admin
 #
 # Change visudo default editor to nano
@@ -70,12 +74,12 @@ read -p "To allow users of wheel group to execute any command with sudo"
 read -p "Find #%wheel ALL=(ALL) NOPASSWD: ALL and uncomment  --- Press [ENTER] to continue ..."
 visudo
 #
-echo "Set password for user account"
-passwd harve
+echo "Set password for ${USR} account"
+passwd ${USR}
 #
 echo "Set password for admin account"
 passwd admin
 #
-read -p "You will be logged out of root and login with then admin account"
-read -p "Then next script --- Press [Enter] to continue ..."
+read -p "You will be logged out of root and then login with then admin account"
+read -p "Then run the next script --- Press [Enter] to continue ..."
 exit
