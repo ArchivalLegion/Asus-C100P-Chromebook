@@ -32,10 +32,12 @@ read -p "Did you review the scripts and set the variables?"
 read -p "Press [Ctrl] + [C] to exit OR [ENTER] to continue"
 #
 # Download files (Veyron Kernel)
-cd ${INS}
+mkdir ${INS}/downloads
+cd ${INS}/downloads
 curl -LO http://os.archlinuxarm.org/os/ArchLinuxARM-veyron-latest.tar.gz
-# Uncomment for mainline kernel and change "Extract tarball" section os script
-# http://os.archlinuxarm.org/os/ArchLinuxARM-armv7-chromebook-latest.tar.gz
+# Uncomment for mainline kernel and change "Extract tarball" section os script (Untested)
+# curl -LO http://os.archlinuxarm.org/os/ArchLinuxARM-armv7-chromebook-latest.tar.gz
+# curl -LO http://mirror.archlinuxarm.org/armv7h/alarm/firmware-veyron-1.0-1-armv7h.pkg.tar.xz
 #
 # Unmount SD Card
 umount -q ${DEV}*
@@ -56,20 +58,12 @@ mkfs.ext4 ${DEV}2
 # Extract tarball
 mkdir ${MNT}
 mount ${DEV}2 ${MNT}
-tar -xf ${INS}/ArchLinuxARM-veyron-latest.tar.gz -C ${MNT}
+tar -xf ${INS}/downloads/ArchLinuxARM-veyron-latest.tar.gz -C ${MNT}
 #
 ## Flash kernel to kernel partition
 dd if=${MNT}/boot/vmlinux.kpart of=${DEV}1
 #
 # Copy files
-# Wireless config
-cp ${INS}/conf/wlan0-mrrobot ${MNT}/etc/netctl/wlan0-mrrobot
-#cp backgrounds
-cp -R ${INS}/backgrounds ${MNT}/usr/share
-# put in the install directory for now for copy at later state (alarm directory???)
-cp -R ${INS}/conf ${MNT}/home/alarm
-cp -R ${INS}/installscripts ${MNT}/home/alarm
-cp -R ${INS}/scripts ${MNT}/home/alarm
 #
 # Wifi fix for firstboot
 mv ${MNT}/usr/lib/systemd/system/systemd-networkd.service ${MNT}/usr/lib/systemd/system/systemd-networkd.disabled
@@ -79,7 +73,8 @@ rm ${MNT}/etc/resolvconf.conf
 rm ${MNT}/etc/resolv.conf
 touch ${MNT}/etc/resolv.conf
 echo "nameserver 127.0.0.1" >> ${MNT}/etc/resolv.conf
-echo "nameserver 192.168.1.119" >> ${MNT}/etc/resolv.conf
+# Used OpenDNS server - this will be replaced after running the first script
+echo "nameserver 208.67.222.222" >> ${MNT}/etc/resolv.conf
 # Need to change a line in this file
 nano ${MNT}/usr/lib/systemd/system/systemd-tmpfiles-setup.service
 # Unmount
