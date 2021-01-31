@@ -1,41 +1,57 @@
 #! /bin/bash
 #
-# Run on computer to setup SD Card
-#
-# When nano opens change the line "ExecStart=systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev"
-# to "ExecStart=echo "disabled""
+# Run this script on a computer or from the chromeos shell
 #
 # Run "lsblk" and "cgpt show /dev/XXX" to set variables
 #
 # MNT = Desired mount point
 # DEV = device (ie /dev/mmcblk0)
 # INS = Directory containing this script and the install files
-# SGT = Start of sec GPT header from "cgpt show /dev/???" (will change based on SD Card Size)
+# SGT = Start of sec GPT header from "cgpt show /dev/???" minus a little bit. This will change based on SD card size.
 #
 # Set variables
 MNT=/mnt/sd 
 DEV=/dev/sdc   
-INS=/home/harve/Chromebook/ArchLinux
+INS=/home/user/ArchLinux
 SGT=60500000
+#
+# Confirmation
+echo "Desired mount point"
+echo ${MNT}
+echo "Device location found using lsblk"
+echo ${DEV}
+echo "Directory where this script and install files are located"
+echo ${INS}
+echo "Start of sec GPT header from "cgpt show /dev/${DEV}" minus a little bit. 
+echo "This will change based on SD card size."
+echo ${SGT}
+echo "You should also review the scripts that will be copied to the device."
+echo "It will be easier to set them up now"
+echo "-------------------------------------------------------------------------"
+read -p "Did you review the scripts and set the variables?"
+read -p "Press [Ctrl] + [C] to exit OR [ENTER] to continue"
+#
+# Download files (Veyron Kernel)
+cd ${INS}
+curl -LO http://os.archlinuxarm.org/os/ArchLinuxARM-veyron-latest.tar.gz
+# Uncomment for mainline kernel and change "Extract tarball" section os script
+# http://os.archlinuxarm.org/os/ArchLinuxARM-armv7-chromebook-latest.tar.gz
 #
 # Unmount SD Card
 umount -q ${DEV}*
-### Uncomment the following if new SD card.
-###
-### Configure sd card
-#fdisk --wipe always ${DEV} <<EEOF
-#g
-#w
-#EEOF
-###
-### Create partition
-##cgpt show ${DEV}
+#
+# Configure sd card
+fdisk --wipe always ${DEV} <<EEOF
+g
+w
+EEOF
+#
+# Create partition
 cgpt create ${DEV}
 cgpt add -i 1 -t kernel -b 8192 -s 32768 -l Kernel -S 1 -T 5 -P 10 ${DEV}
 cgpt add -i 2 -t data -b 40960 -s `expr ${SGT} - 40960` -l Root ${DEV}
 partx -a ${DEV}
 mkfs.ext4 ${DEV}2
-###
 # 
 # Extract tarball
 mkdir ${MNT}
