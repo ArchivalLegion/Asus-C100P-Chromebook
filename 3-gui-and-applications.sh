@@ -4,7 +4,7 @@
 #
 #### Variables######
 USR=newuser
-cd /home/install
+cd /home/alarm
 ####################
 #
 # Disable root login
