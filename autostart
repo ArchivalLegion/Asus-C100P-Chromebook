@@ -1,0 +1,11 @@
+# Openbox autostart
+# ~/.config/openbox/autostart
+#
+# Run once for background update on login
+feh --bg-scale --no-fehbg /usr/share/backgrounds/background.png
+#
+xfce4-panel &
+#
+#
+# Connect to wifi
+sudo netctl start wlan0-mrrobot &
