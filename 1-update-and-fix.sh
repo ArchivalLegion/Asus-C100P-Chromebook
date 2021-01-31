@@ -3,14 +3,12 @@
 # When the system boots for the first time login to the root account (password root) and run this script.
 # It will connect to the internet, update, and then run a fix for the next boot.
 #
-# Variables - Set your prefered DNS Server and wifi-config file name
+##### Variables #####
 DNS=208.67.222.222
-WIFI=wlan0-house
+#####################
 #
 # Connect to wifi
-netctl start ${WIFI}
-### If you did not copy a config file then use wifi-menu to generate one
-### wifi-menu
+wifi-menu
 #
 # Pacman initialize and update
 pacman-key --init
