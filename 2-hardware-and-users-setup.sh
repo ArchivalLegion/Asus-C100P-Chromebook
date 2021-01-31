@@ -7,7 +7,7 @@
 TZ=America/Vancouver
 USR=newuser
 WIFI=wlan0-mrrobot
-cd /home/install
+cd /home/alarm
 #########################
 #
 # Finish wifi fix
