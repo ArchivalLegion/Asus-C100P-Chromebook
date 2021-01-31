@@ -1,0 +1,8 @@
+# Openbox autostart
+# ~/.config/openbox/autostart
+#
+# Load panel
+xfce4-panel &
+#
+# Connect to wifi
+sudo netctl start wlan0-SSID &
