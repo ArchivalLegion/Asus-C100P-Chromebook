@@ -9,8 +9,8 @@ How to install:
 
 Section One – Prepare the device
 1) Put the Asus C100P into developer mode. I won’t really be going into detail as this is covered in great detail elsewhere.
+2) If using the Chromebook to setup the sdcard then boot into developer mode (Ctrl+D). When it boots connect to wifi and open a guest session (You don’t need to login with google or do any other configuration of Chromeos).
 https://www.howtogeek.com/210817/how-to-enable-developer-mode-on-your-chromebook/
-2 ) If using the Chromebook to setup the sdcard then boot into developer mode (Ctrl+D). When it boots connect to wifi and open a guest session (You don’t need to login with google or do any other configuration of Chromeos). 
 
 Section Two – Configuring files
 1) Download all scripts and files into a new folder. Take note of the folder name and location.
@@ -19,13 +19,15 @@ Section Two – Configuring files
 4) Open “sdcardinstall.sh” in a text editor and change the variables if needed.
 5) Open “1-update-and-fix.sh” in a text editor change the DNS variable to your desired DNS (default is OpenDNS).
 6) Open ”2-hardware-and-users-setup.sh” in a test editor and set the timezone, username (default is “newuser”, and SSID of wifi network (should be “wlan0-<SSID>”).
-7) Open “3-gui-and-applications.sh” in a text editor and set the username (default is newuser) and review the script to select your desired desktop environment (default is openbox with xfce components).
+7) Open “3-gui-and-applications.sh” in a text editor and set the username (default is newuser) and review the script to select your desired desktop environment (default is openbox with xfce components and feh for backgrounds).
 8) Make sure the ownership and permissions of the download files are correct. Open a root terminal (or use sudo) in the directory where the files were downloads and run “chown root:root *”. Then make sure the scripts are executable by running “chmod +x *.sh”
 
 Section Three – Writing to SD Card
 If using a linux computer; open a root terminal (or use sudo) and run “sh sdcardinstall.sh”. Follow directions, cross fingers.
 
-If using the chromebook; open a terminal by pressing Ctrl+Alt+T then type “shell” and enter. “sudo su” will open root terminal or type sudo before commands. Then run as root “mount -i -o remount,exec /home” This will allow you to execute the sdcardinstall.sh script from the chromebook. Then run as root “sh sdcardinstall.sh”. Follow directions, cross fingers. 
+If using the chromebook; open a terminal by pressing Ctrl+Alt+T then type “shell” and enter. “sudo su” will open root terminal or type sudo before commands. Then run as root “mount -i -o remount,exec /home” This will allow you to execute the sdcardinstall.sh script from the chromebook. Then run as root “sh sdcardinstall.sh”. Follow directions, cross fingers.
+
+https://archlinuxarm.org/platforms/armv7/rockchip/asus-chromebook-flip-c100p
 
 Section Four – To run on device in archlinux
 1) Insert SD card into chromebook if using other computer to setup or reboot if using chromebook. Press “Ctrl+U” at boot screen to boot from external storage.
@@ -34,18 +36,25 @@ Section Four – To run on device in archlinux
 4) Once second script is finished logout and login as “admin” using the new password. If you accidentally reboot instead of logging out you will have to reconnect to the internet “netctrl start wlan0-<SSID>” before running third script.
 5) Run the third script as admin “3-gui-and-applications.sh”. Cross fingers. Lightdm should start.
 
-The next steps of the project are:
-- Install a Samba filesharing client
-- Install Wireguard vpn client for when I am not on my home network
-- Install Zoom for video calls and work
-- Get webcam working in messenger in firefox
-- Finish configuring the keyboard for volume and brightness control
-- Install onto internal memory
-
-Thanks for all the people who helped me get this far. I've listed some really good resources below
-https://archlinuxarm.org/platforms/armv7/rockchip/asus-chromebook-flip-c100p
 https://wiki.archlinux.org/index.php/Installation_guide
 https://github.com/nikolas-n/GNU-Linux-on-Asus-C201-Chromebook
+https://wiki.debian.org/InstallingDebianOn/Asus/C201
+
+Issues:
+- There is a bug in firefox where my passwords will not sync
+- I have not yet configured the brightness and volume control buttons on the keyboard.
+- The webcam glitchy. In vlc it doesn't load everytime and when it does load it takes a while. 
+- The webcam does not work in firefox (specifically for messenger video calls)
+- Zoom was not installed. Zoom is a major goal of this project as I use it for work. I am trying to run the 32-bit linux zoom in box86.
+- I am using openbox auto start to automatically connect to my home wifi. It seems hacky, there is probably a better way.
+
+Features to implement
+- Samba filesharing client for home network shares.
+- Wireguard vpn client so I can connect to my vpn when I am not on my home network.
+- Install onto internal memory once issues are resolved.
+- Some type of usage management software like focus.py. I tend to waste a lot of time on this device.
+
+Thanks for all the people who helped me get this far!
+
 http://kmkeen.com/c100p-tweaks/index.html
 https://github.com/keenerd/c100p-tweaks/
-https://wiki.debian.org/InstallingDebianOn/Asus/C201
