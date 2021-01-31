@@ -1,8 +1,10 @@
 # Asus-C100P-Chromebook
-This project is designed to install archlinux on an ASUS C100P chromebook and get it to a useable state. It is my first project like this and I am somewhat of a casual linux enthusiast. Hopefully someone else may find this helpful. I really like my C100P and I was really disappointed when I learned google would no longer be updating it. With this information I was able to put a little bit more life into it.
+This project is designed to install archlinux on an ASUS C100P chromebook and get it to a useable state. I am a casual linux enthusiast and this is the biggest project I have undertaken. I was able to find some very helpfuls sources online and then put them together into several scripts and config files. Hopefully someone else may find this helpful.
 
-INSTALL
-1) Review all scripts (some have variables that you may want to change)
+I really like my C100P and I was extremely disappointed when it stopped recieving updates. After installing archlinux it is faster than ever and retains most of the usability that it had before.
+
+How to use:
+1) Download all scripts and files into a folder. Take note of the folder location
 2) Preparing the SD Card for a linux computer or the ChromeOS partition of the chrombook *** WILL BE POSTING a script SOON ***
 3) Boot into arch, login as root (default password root) and run the first script. Pacman will be initialized and updated and a systemd fix will run. The system will reboot when finished.
 4) Login as root again and run the sceond script
