@@ -1,0 +1,8 @@
+# Changes the default visudo editor to nano
+# If not added to /etc/sudoers.d/editor-nano-visudo then you have to run
+# EDITOR=nano visudo 
+#
+# Reset environment by default
+Defaults      env_reset
+# Set default EDITOR to nano, and do not allow visudo to use EDITOR/VISUAL.
+Defaults      editor=/usr/bin/nano, !env_editor

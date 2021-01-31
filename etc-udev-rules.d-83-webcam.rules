@@ -1,0 +1,9 @@
+# Users in the video group will have access to the webcam
+# The webcam will be located in "/dev/video0"
+#
+# video0 permissions
+KERNEL=="video0", SUBSYSTEM=="video4linux", MODE="0770", GROUP="video"
+#
+# webcam permission and symlink to video0
+KERNEL=="video[0-9]*", SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idProduct}=="b53a", ATTRS{idVendor}=="04f2", SYMLINK+="video0", MODE="0770", GROUP="video"
+
