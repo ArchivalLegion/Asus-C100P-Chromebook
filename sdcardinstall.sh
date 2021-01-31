@@ -64,6 +64,7 @@ tar -xf ${INS}/downloads/ArchLinuxARM-veyron-latest.tar.gz -C ${MNT}
 dd if=${MNT}/boot/vmlinux.kpart of=${DEV}1
 #
 # Copy files
+cp -R ${INS}/* ${MNT}/home/alarm
 #
 # Wifi fix for firstboot
 mv ${MNT}/usr/lib/systemd/system/systemd-networkd.service ${MNT}/usr/lib/systemd/system/systemd-networkd.disabled
@@ -73,11 +74,11 @@ rm ${MNT}/etc/resolvconf.conf
 rm ${MNT}/etc/resolv.conf
 touch ${MNT}/etc/resolv.conf
 echo "nameserver 127.0.0.1" >> ${MNT}/etc/resolv.conf
-# Used OpenDNS server - this will be replaced after running the first script
 echo "nameserver 208.67.222.222" >> ${MNT}/etc/resolv.conf
-# Need to change a line in this file
+read -p "Find ExecStart=systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev"
+read -p "Change to ExecStart=echo ''disabled'' --- Press [Enter] to continue ..."
 nano ${MNT}/usr/lib/systemd/system/systemd-tmpfiles-setup.service
+#
 # Unmount
 umount ${DEV}2
 sync
-
