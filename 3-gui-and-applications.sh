@@ -36,7 +36,8 @@ systemctl enable lightdm
 pacman -S xfce4-panel xfce4-whiskermenu-plugin xfce4-taskmanager xfce4-appfinder xfce4-terminal thunar openbox obconf menumaker ttf-dejavu ttf-liberation
 # copy openbox configs with keybindings (Ctrl-Alt-Backspace, Ctrl-Alt-T, Ctrl-Alt-F, Ctrl-Alt-D, Search Key, and USR autostart)
 cp etc-xdg-openbox-rc.xml /etc/xdg/openbox/rc.xml
-cp -R openbox /home/${USR}/.config/
+cp etc-xdg-openbox-rc.xml /home/${USR}/.config/openbox/rc.xml
+cp openbox-autostart /home/${USR}/.config/openbox/autostart.xml
 # update menus
 runuser -l ${USR} -c 'mmaker -vf OpenBox3'
 mmaker -vf OpenBox3
