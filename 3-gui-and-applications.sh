@@ -14,7 +14,10 @@ passwd -l root
 pacman -S xorg-xinit xorg-server xorg-xinput
 #
 # Install Applications (Web browser, photo editor, office suite, notepad, videos, image viewer)
-pacman -S pinta firefox libreoffice-still xed vlc ristretto
+pacman -S pinta firefox libreoffice-still xed vlc ristretto thunderbird
+#
+# Firefox issues: Password sync does not work. WebGL must be forced for some websites to run properly
+# Firefox --> about:config --> webgl.force-enabled = true --> restart firefox
 #
 # Install Display Manager (LightDM)
 pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
@@ -27,7 +30,6 @@ systemctl enable lightdm
 #
 # 1) XFCE
 # pacman -S xfce4 xfce4-goodies
-# pacman -R mousepad xfce4-notes-plugin
 #
 # 2) MATE 
 # pacman -S mate mate-extra
@@ -45,6 +47,9 @@ nano /home/${USR}/.config/openbox/autostart
 runuser -l ${USR} -c 'mmaker -vf OpenBox3'
 mmaker -vf OpenBox3
 openbox --reconfigure
+#
+# Remove packages you do not want
+# pacman -R mousepad xfce4-notes-plugin
 #
 # Fix the ownership of files that were copied into the user directory
 chown -R ${USR}:${USR} /home/${USR}
