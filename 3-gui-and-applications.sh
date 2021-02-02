@@ -16,8 +16,10 @@ pacman -S xorg-xinit xorg-server xorg-xinput
 # Install Applications (Web browser, photo editor, office suite, notepad, videos, image viewer)
 pacman -S pinta firefox libreoffice-still xed vlc ristretto thunderbird
 #
-# Firefox issues: Password sync does not work. WebGL must be forced for some websites to run properly
-# Firefox --> about:config --> webgl.force-enabled = true --> restart firefox
+# Firefox issue #1: Password sync does not work. You can manually import backedup passwords from firefox
+# Firefox --> about:config --> signon.management.page.fileImport.enabled = true --> about:logins --> import file
+# Firefox issue#2: WebGL must be forced for some websites to run properly
+# Firefox --> about:config --> webgl.force-enabled = true
 #
 # Install Display Manager (LightDM)
 pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
