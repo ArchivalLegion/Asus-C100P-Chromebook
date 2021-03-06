@@ -13,24 +13,26 @@ I used a Windows 10 desktop running linux mint in a virtual box to setup my sdca
 https://www.howtogeek.com/210817/how-to-enable-developer-mode-on-your-chromebook/
 
 ## Section Two – Configuring files
-1 Download all scripts and files into a new folder
-`git clone https://github.com/harvp0wn/Asus-C100P-Chromebook`
-2 Run “lsblk”. The location will differ based on the device you are using to setup the sdcard. Note this location (ie /dev/sdb or /dev/mmcblk0).
-3 Use the device location above and run “cgpt show /dev/???”. This will change based on sdcard size. Note the start of sec GPT header and then subtract a little bit.
-4 Open “sdcardinstall.sh” in a text editor and change the variables if needed. If installing from chromeos change "nano" to "vim" in the final step.
-5 Open “1-update-and-fix.sh” in a text editor change the DNS variable to your desired DNS (default is OpenDNS).
-6 Open ”2-hardware-and-users-setup.sh” in a test editor and set the timezone, username (default is “newuser”, and SSID of wifi network (should be “wlan0-SSID”).
-7 Open “3-gui-and-applications.sh” in a text editor and set the username (default is newuser) and review the script to select your desired desktop environment (default is openbox with some xfce components and feh for backgrounds). You can also change backgrounds in lightdm conf.
-8 Make sure the ownership and permissions of the download files are correct.
+1. Download all scripts and files into a new folder
+```
+git clone https://github.com/harvp0wn/Asus-C100P-Chromebook
+```
+2. Run `lsblk` to determine the sdcard location (ie /dev/sdb or /dev/mmcblk0).
+3. Run `cgpt show /dev/???` to determine the SD card size. Note the start of sec GPT header and then subtract a little bit.
+4. Open “sdcardinstall.sh” in a text editor and change the variables if needed. If installing from chromeos change "nano" to "vim" in the final step.
+5. Open “1-update-and-fix.sh” in a text editor change the DNS variable to your desired DNS (default is OpenDNS).
+6. Open ”2-hardware-and-users-setup.sh” in a test editor and set the timezone, username (default is “newuser”, and SSID of wifi network (should be “wlan0-SSID”).
+7. Open “3-gui-and-applications.sh” in a text editor and set the username (default is newuser) and review the script to select your desired desktop environment (default is openbox with some xfce components and feh for backgrounds). You can also change backgrounds in lightdm conf.
+8. Make sure the ownership and permissions of the download files are correct.
 ```
 chown root:root *
 chmod +x *.sh
 ```
 
 ## Section Three – Writing to SD Card
-If using a linux computer; open a root terminal (or use sudo) and run “sh sdcardinstall.sh”. Follow directions, cross fingers.
+1. If using a linux computer; open a root terminal (or use sudo) and run “sh sdcardinstall.sh”. Follow directions, cross fingers.
 
-If using the chromebook; open a terminal by pressing Ctrl+Alt+T then type “shell” and enter. “sudo su” will open root terminal or type sudo before commands. Then run as root “mount -i -o remount,exec /home” This will allow you to execute the sdcardinstall.sh script from the chromebook. Then run as root “sh sdcardinstall.sh”. Follow directions, cross fingers.
+2. If using the chromebook; open a terminal by pressing Ctrl+Alt+T then type “shell” and enter. “sudo su” will open root terminal or type sudo before commands. Then run as root “mount -i -o remount,exec /home” This will allow you to execute the sdcardinstall.sh script from the chromebook. Then run as root “sh sdcardinstall.sh”. Follow directions, cross fingers.
 
 https://archlinuxarm.org/platforms/armv7/rockchip/asus-chromebook-flip-c100p
 
