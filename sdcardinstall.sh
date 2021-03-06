@@ -10,9 +10,9 @@
 # SGT = Start of sec GPT header from "cgpt show /dev/???" minus a little bit. This will change based on SD card size.
 #
 # Set variables
-MNT=/mnt/sd 
+MNT=/mnt/usb 
 DEV=/dev/sdc   
-INS=/home/user/ArchLinux
+INS=/home/user/Asus-C100P-Chromebook
 SGT=60500000
 #
 # Confirmation
@@ -22,14 +22,14 @@ echo "Device location found using lsblk"
 echo ${DEV}
 echo "Directory where this script and install files are located"
 echo ${INS}
-echo "Start of sec GPT header from "cgpt show /dev/${DEV}" minus a little bit. 
+echo "Start of sec GPT header from "cgpt show /dev/??? minus a little bit." 
 echo "This will change based on SD card size."
 echo ${SGT}
 echo "You should also review the scripts that will be copied to the device."
-echo "It will be easier to set them up now"
-echo "-------------------------------------------------------------------------"
-read -p "Did you review the scripts and set the variables?"
-read -p "Press [Ctrl] + [C] to exit OR [ENTER] to continue"
+# echo "It will be easier to set them up now"
+# echo "-------------------------------------------------------------------------"
+# read -p "Did you review the scripts and set the variables?"
+# read -p "Press [Ctrl] + [C] to exit OR [ENTER] to continue"
 #
 # Download files (Veyron Kernel)
 mkdir ${INS}/downloads
