@@ -50,8 +50,14 @@ runuser -l ${USR} -c 'mmaker -vf OpenBox3'
 mmaker -vf OpenBox3
 openbox --reconfigure
 #
+# Install and configure firewall
+sudo pacman -S ufw
+# Comment out below to keep SSH blocked
+sudo ufw limit from 192.168.1.0/24 to any port 22
+sudo ufw enable
+#
 # Remove packages you do not want
-# pacman -R mousepad xfce4-notes-plugin
+pacman -R mousepad xfce4-notes-plugin
 #
 # Fix the ownership of files that were copied into the user directory
 chown -R ${USR}:${USR} /home/${USR}
