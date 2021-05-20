@@ -1,9 +1,13 @@
-# Openbox autostart
-# ~/.config/openbox/autostart
 #
-# Load panel
+# These things are run when an Openbox X Session is started.
+# You may place a similar script in $HOME/.config/openbox/autostart
+# to run user-specific things. 
+#
+# Panel
 tint2 &
-# Load power manager --> brightness keys will work
+# Power Management (Brightness Buttons)
 xfce4-power-manager &
-# Load audio panel --> in settings you can get the volume keys to work
+# Audio
 volumeicon &
+# Notifications
+xfce4-notifyd &
