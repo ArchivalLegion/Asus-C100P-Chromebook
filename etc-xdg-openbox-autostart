@@ -1,0 +1,9 @@
+# Openbox autostart
+# ~/.config/openbox/autostart
+#
+# Load panel
+tint2 &
+# Load power manager --> brightness keys will work
+xfce4-power-manager &
+# Load audio panel --> in settings you can get the volume keys to work
+volumeicon &

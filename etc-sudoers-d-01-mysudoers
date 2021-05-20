@@ -1,0 +1,2 @@
+%network ALL = NOPASSWD: /usr/bin/wifi-menu, /usr/bin/netctl, /usr/bin/netctl-auto, /usr/bin/wg, /usr/bin/wg-quick
+%users ALL = NOPASSWD: /usr/bin/shutdown, /usr/bin/halt, /usr/bin/poweroff, /usr/bin/reboot
