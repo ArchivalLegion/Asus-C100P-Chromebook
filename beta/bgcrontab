@@ -1,0 +1,35 @@
+# Light DM Background Switcher for cron
+# Updating the background with feh should be set in the admin contab
+# Everyday the background will switch in the morning and evenign (6am and 6pm).
+# Files should start with the 3 letter day of the week and end in .png
+# lightdm-gtk-greeter should have background set to /usr/share/backgrounds/background.png
+# /etc/lightdm/lightdm-gtk-greeter.conf
+#
+# Copy image to background.png
+0 6 * * mon /bin/sudo cp /usr/share/backgrounds/light/mon*.png /usr/share/backgrounds/background.png
+0 18 * * mon /bin/sudo cp /usr/share/backgrounds/dark/mon*.png /usr/share/backgrounds/background.png
+#
+0 6 * * tue /bin/sudo cp /usr/share/backgrounds/light/tue*.png /usr/share/backgrounds/background.png
+0 18 * * tue /bin/sudo cp /usr/share/backgrounds/dark/tue*.png /usr/share/backgrounds/background.png
+#
+0 6 * * wed /bin/sudo cp /usr/share/backgrounds/light/wed*.png /usr/share/backgrounds/background.png
+0 18 * * wed /bin/sudo cp /usr/share/backgrounds/dark/wed*.png /usr/share/backgrounds/background.png
+#
+0 6 * * thu /bin/sudo cp /usr/share/backgrounds/light/thu*.png /usr/share/backgrounds/background.png
+0 18 * * thu /bin/sudo cp /usr/share/backgrounds/dark/thu*.png /usr/share/backgrounds/background.png
+#
+0 6 * * fri /bin/sudo cp /usr/share/backgrounds/light/fri*.png /usr/share/backgrounds/background.png
+0 18 * * fri /bin/sudo cp /usr/share/backgrounds/dark/fri*.png /usr/share/backgrounds/background.png
+#
+0 6 * * sat /bin/sudo cp /usr/share/backgrounds/light/sat*.png /usr/share/backgrounds/background.png
+0 18 * * sat /bin/sudo cp /usr/share/backgrounds/dark/sat*.png /usr/share/backgrounds/background.png
+#
+0 6 * * sun /bin/sudo cp /usr/share/backgrounds/light/sun*.png /usr/share/backgrounds/background.png
+0 18 * * sun /bin/sudo cp /usr/share/backgrounds/dark/sun*.png /usr/share/backgrounds/background.png
+#
+0 6 * * mon /bin/sudo cp /usr/share/backgrounds/light/mon*.png /usr/share/backgrounds/background.png
+0 18 * * mon /bin/sudo cp /usr/share/backgrounds/dark/mon*.png /usr/share/backgrounds/background.png
+#
+### User crontab
+### Update Background with feh every 30 minutes
+### 1,31 * * * * /bin/feh --bg-scale --no-fehbg /usr/share/backgrounds/background.png

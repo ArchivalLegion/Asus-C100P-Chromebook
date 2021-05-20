@@ -1,0 +1,5 @@
+I modified xflock4 so that it would use the lightdm lock screen instead of the xfce4 screensaver
+
+dm-tool lock
+
+However... even with xflock4 modified the power manager will still lock using xfce4-screensaver-command --lock
