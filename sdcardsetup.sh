@@ -16,21 +16,14 @@ INS=/home/pi/Asus-C100P-Chromebook
 SGT=60500000
 #
 ## Download files
-#mkdir ${INS}/downloads
-#cd ${INS}/downloads
+mkdir ${INS}/downloads
+cd ${INS}/downloads
 ##
 ## Veyron Kernel (Outdated)
 ## curl -LO http://os.archlinuxarm.org/os/ArchLinuxARM-veyron-latest.tar.gz
 ##
 ## Mainline kernel
-#curl -LO http://os.archlinuxarm.org/os/ArchLinuxARM-armv7-chromebook-latest.tar.gz
-#
-# DOwnload Wifi drivers
-# mkdir ${INS}/firmware
-# cd ${INS}/firmware
-# You can copy from the chome os directory or download from
-# https://github.com/cracket/c100/blob/main/hardware.md
-# not sure if I can post this in my repo on github
+curl -LO http://os.archlinuxarm.org/os/ArchLinuxARM-armv7-chromebook-latest.tar.gz
 #
 # Unmount SD Card
 umount -q ${DEV}*
@@ -57,7 +50,11 @@ tar -xf ${INS}/downloads/ArchLinuxARM-armv7-chromebook-latest.tar.gz -C ${MNT}
 dd if=${MNT}/boot/vmlinux.kpart of=${DEV}1
 #
 # Copy files
+mkdir ${MNT}/root
 cp -R ${INS}/* ${MNT}/root
+#
+Ensure proper file ownership
+chown -R root:root ${MNT}/root
 #
 # Copy wifi drivers
 cp ${INS}/firmware/* ${MNT}/lib/firmware/brcm
