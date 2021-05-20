@@ -68,6 +68,7 @@ openbox --reconfigure
   I have modified xflock4 to use lightdm as the primary lock
   option. However, when the lid is closed, xfce4-screensaver
   is still used to lock the screen.
+- clean up unneeded packages and remove xfce and lxqt
 - Install on main partition
 
 
