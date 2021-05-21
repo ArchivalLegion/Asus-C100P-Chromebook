@@ -11,3 +11,5 @@ xfce4-power-manager &
 volumeicon &
 # Notifications
 xfce4-notifyd &
+# Nextcloud
+nextcloud --background &
