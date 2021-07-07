@@ -1,0 +1,15 @@
+# Ignore Global Personal Files
+core/etc/NetworkManager
+core/etc/wireguard
+core/etc/netctl
+
+# Ignore Personal User Files
+home/.thunderbird
+home/.mozilla
+home/.config/gtk-3.0
+
+# Experimental Stuff
+PRIVATE.sh
+
+# Ignore Downloaded Files
+ArchLinuxARM-armv7-chromebook-latest.tar.gz

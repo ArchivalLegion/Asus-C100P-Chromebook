@@ -1,95 +1,105 @@
-# Asus-C100P-Chromebook
-My ongoing experience installing arch linux on an end of life chromebook
+# Asus-C100P-Chromebook ArchLinux
+My ongoing experience installing arch linux on an end of life chromebook.
 
-## 20/05/2021
-I had a major breakthrough with installing the mainline kernel. Everything is running much smoother now. Thank you cracket !
+When I started this project there wasn't a lot of information out about this Chromebook and many of the implementations required a lot of tinkering and were not beginner friendly. This isn't really the case anymore.
 
-1) Make an sdcard using sdcardsetup.sh
-2) Boot the SD card and login as root
-3) Run archcoreinstall.sh
+# Quick Install
+1. Go to home directory `cd ~/`
+2. Clone repo `git clone https://github.com/harvp0wn/Asus-C100P-Chromebook`
+3. Enter directory `cd Asus-C100P-Chromebook`
+4. Review all scripts
+5. Insert a sdcard into your build machine and run sdcard the setup script `sudo bash sdcardsetup.sh`
+6. Insert the sd card into the chromebook and boot in developer mode (Ctrl-U)
+7. Login into arch (root:root... or alarm:alarm) <-- need to test
+8. Run arch setup script `bash archsetup.sh`
 
-# Features:
+# Hardware
+- Wifi and Bluetooth: Need to copy proprietary drivers from chromeos partition (/usr/lib/firmware/brcm/)
+- Webcam: Should work out of the box now. There is a bug with Firefox so I use chromium for video chats.
+- Keyboard: Everything works (/etc/X11/xorg.conf.d/70-synaptics.conf)
+
+# Software
+## LightDM Gtk Greeter
+- Loads the background image (default: /usr/share/backgrounds/background.png)
+
+## Openbox
+### Autostart (/etc/xdg/openbox/autostart)
+- Panel: tint2 (~/.config/tint2/tint2rc)
+- Volume: volumeicon
+- Notifications: xfce4-notifyd 
+- Power Management: xfce4-power-manager
+- NetworkManager
+- Bluetooth: blueman
+- Clipboard: parcellite
+
+### Keybindings (/etc/xdg/openbox/rc.xml)
+- All Chromebook function keys are configured (Sound, Brightness, Lock, etc)
+- Task Manager = Ctrl-Alt-Backspace
+- Terminal = Ctrl-Alt-T
+- Firefox = Ctrl-Alt-F
+- Desktop = Ctrl-Alt-D
+- Appfinder = Search Button
+- Toggle always on top = Ctrl-Space
+- Screenshot = Overview button + Ctrl
+- Window Snapping to a Side = Ctrl + Direction Arrow
+- Window Snapping to a Corner = Alt + Direction Arrow
+### Openbox Menu (/etc/xdg/openbox/menu.xml)
 
 ## Samba Client
 
 packages: smbclient cifs-utils gvfs-smb
 navigate to smb://server/ in thunar or make a launcher for "thunar smb://server/"
 OR Manually Mount
+```
 sudo mkdir /mnt/mountpoint
 mount -t cifs //SERVER/sharename /mnt/mountpoint -o username=username,password=password
-
-## Wireguard Client
-
-packages: wireguard-tools
-Copy wireguard config file to /etc/wireguard/
-Option 1: wg-quick
-To start/stop "wg-quick up/down archbook"
-For status "wg"
-Option 2: Netctl
-Setup a netctl profile using /etc/netctl/examples/wireguard and move to etc/wireguard/wg0
-To start/stop "netctl start/stop wg0"
-To load at boot enable the netctl profile "netctl enable wg0"
+```
 
 ## Nextcloud
 
-packages: davfs2 nextcloud-client
-nextcloud-client will sync files for offline use
-navigate to davs://yournextcloudserver.com/remote.php/webdav/ or make a launcher "thunar davs://yournextcloudserver.com/remote.php/webdav/"
-OR Manually Mount
-davfs allows mounting nextcloud but requires internet access
+davfs allows opening nextcloud in thunar. nextcloud-client will sync files for offline use.
+in thunar navigate to davs://yournextcloudserver.com/remote.php/webdav/ or from the command line
+`thunar davs://yournextcloudserver.com/remote.php/webdav/"`
+you can also mount nextcloud
+```
 mkdir /mnt/nextcloud
 mount -t davfs https://your_domain/nextcloud/remote.php/dav/files/username/ /path/to/mount
+```
+Nextcloud-client makes set the default folder location as ~/Nextcloud. The was leading to problems with permission, file searches and backups. If I want to backup my home folder I don't want to backup my offline nextcloud storage aswell... It's already on the cloud ! So I changed the location.
+```
+mkdir /mnt/Nextcloud-Client-Offline
+chown USERNAME:USERNAME Nextcloud-Client-Offline
+# Updated in nextcloud-client config
+nano ~/.config/Nextcloud/nextcloud.cfg
+# Updated the following line:
+# 0\Folders\1\localPath=/mnt/Nextcloud-Client-Offline
+```
+SUCCESS !!!
 
-## LightDM
+## Wireless Brother Printer Drivers with CUPS
 
-The lightdm background is used in openbox sessions. Therefore I do not run a background program with openbox. to manually change the background run lightdm-gtk-greeter-settings
+packages: cups ghostscript
+Built drivers directly from:
+https://github.com/pdewacht/brlaser
+SUCCESS !!!
 
-## Desktop Environments
+## Box86 (From AUR)
 
-The script will install and configure an openbox session. Xfce and Lxqt are there to try but are not configured.
-Openbox Keybindings: Ctrl-Alt-Backspace = task manager, Ctrl-Alt-T = terminal, Ctrl-Alt-F = Firefox, Ctrl-Alt-D = Desktop, Search Button = Appfinder, Ctrl-Space = Toggle always on top, Overview button + Ctrl = Screenshoot
-Menumaker is set to make menus during install to update run"
-mmaker -vf -s console,kde,xfce,gnome --no-debian --no-legacy openbox3
-openbox --reconfigure
+Installed directly from the AUR to run 32bit x86 programs. 
+SUCCESS !!!
 
-# What hasn't been tested
+## Zoom (Running in Box86)
+Manually download the 32bit linux x86 standalone package from zoom.us
+extract and run
+SUCCESS !!!
 
-- Wireguard
-- Bluetooth
-- Headphone jack
+## Widevine DRM (From AUR)
 
-# Issues to fix and future projects
-
-- make shortcuts for restart, suspend/sleep, logoff, and power off, etc
-- Automatically connect with wireguard when not on home network
-- Install zoom (box86) --> Successful ! Will post
-- remove xfce4 lock background
-- I want to use lightdm to lock the screen (dm-tool lock).
-  I have modified xflock4 to use lightdm as the primary lock
-  option. However, when the lid is closed, xfce4-screensaver
-  is still used to lock the screen.
-- clean up unneeded packages and remove xfce and lxqt
-- Install on main partition
-
+packages: widevine-armv7h
+https://aur.archlinux.org/packages/widevine-armv7h/
+Allows the playback of widevine DRM content (Netflix, Spotify, etc)
+For netflix you also have to switch the user agent to chromeos
 
 # Bugs
-
-- Firefox will not sync passwords --> using bitwarden plugin
-- Firefox will not use webcam video --> installed chromium
-- Webcam image needs to be mirrored. I followed the guide on the archwiki but not luck. Zoom will allow webcam mirroring but there is no option in chromium.
-
-https://wiki.archlinux.org/title/Webcam_setup
-
-`LD_PRELOAD=/usr/lib/libv4l/v4l2convert.so /usr/bin/firefox`
-
-Did not work
-```
-sudo pacman -S linux-armv7-headers v4l-utils v4l2loopback-dkms ffmpeg
-# Installing linux-headers was important. I moved to the core script
-sudo modprobe v4l2loopback
-v4l2-ctl --list-devices
-Dummy video device (0x0000) (platform:v4l2loopback-000):
-	/dev/video5
-ffmpeg -f v4l2 -i /dev/video1 -vf "vflip" -f v4l2 /dev/video5
---> Did not work. Webcam would turn on but I could not access /dev/video5 video feed
-```
+- Firefox: will not sync passwords --> using bitwarden plugin
+- Firefox: No webcam access --> using chromium for video chats

@@ -11,5 +11,8 @@ xfce4-power-manager &
 volumeicon &
 # Notifications
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
-# Nextcloud
-nextcloud --background &
+# NetworkManager Applet
+nm-applet &
+# Bluetooth applet
+blueman-applet &
+#
